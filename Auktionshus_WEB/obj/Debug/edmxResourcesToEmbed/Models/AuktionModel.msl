@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AuktionDatabaseModelStoreContainer" CdmEntityContainer="AuktionDatabaseEntities">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="AuktionDatabaseModel.Account">
+        <MappingFragment StoreEntitySet="Accounts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PurchaseOffers">
+      <EntityTypeMapping TypeName="AuktionDatabaseModel.PurchaseOffer">
+        <MappingFragment StoreEntitySet="PurchaseOffers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+          <ScalarProperty Name="SalesOfferId" ColumnName="SalesOfferId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalesOffers">
+      <EntityTypeMapping TypeName="AuktionDatabaseModel.SalesOffer">
+        <MappingFragment StoreEntitySet="SalesOffers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MetalType" ColumnName="MetalType" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+          <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

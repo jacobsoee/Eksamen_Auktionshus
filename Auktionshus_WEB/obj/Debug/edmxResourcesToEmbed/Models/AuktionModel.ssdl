@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AuktionDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PurchaseOffers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Amount" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AccountId" Type="int" />
+    <Property Name="SalesOfferId" Type="int" />
+  </EntityType>
+  <EntityType Name="SalesOffers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MetalType" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Deadline" Type="datetime" Nullable="false" />
+    <Property Name="AccountId" Type="int" />
+  </EntityType>
+  <Association Name="FK_AccountPurchaseOffer">
+    <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+    <End Role="PurchaseOffers" Type="Self.PurchaseOffers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Accounts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOffers">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AccountSalesOffer">
+    <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+    <End Role="SalesOffers" Type="Self.SalesOffers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Accounts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SalesOffers">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesOfferPurchaseOffer">
+    <End Role="SalesOffers" Type="Self.SalesOffers" Multiplicity="0..1" />
+    <End Role="PurchaseOffers" Type="Self.PurchaseOffers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesOffers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOffers">
+        <PropertyRef Name="SalesOfferId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AuktionDatabaseModelStoreContainer">
+    <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseOffers" EntityType="Self.PurchaseOffers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SalesOffers" EntityType="Self.SalesOffers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AccountPurchaseOffer" Association="Self.FK_AccountPurchaseOffer">
+      <End Role="Accounts" EntitySet="Accounts" />
+      <End Role="PurchaseOffers" EntitySet="PurchaseOffers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AccountSalesOffer" Association="Self.FK_AccountSalesOffer">
+      <End Role="Accounts" EntitySet="Accounts" />
+      <End Role="SalesOffers" EntitySet="SalesOffers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesOfferPurchaseOffer" Association="Self.FK_SalesOfferPurchaseOffer">
+      <End Role="SalesOffers" EntitySet="SalesOffers" />
+      <End Role="PurchaseOffers" EntitySet="PurchaseOffers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

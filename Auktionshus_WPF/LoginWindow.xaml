@@ -1,0 +1,18 @@
+﻿<Window x:Class="Auktionshus_WPF.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Auktionshus_WPF"
+        mc:Ignorable="d"
+        Title="Login" Height="350" Width="350">
+    <Grid>
+        <TextBlock TextWrapping="Wrap" Text="Velkommen til Auktionshuset!" Height="19" Margin="64,10,-64,240"/>
+        <Button x:Name="LoginButton" Width="50" Height="25" Margin="55,193,187,51" Click="LoginButton_Click" >Login</Button>
+        <Button x:Name="RegisterButton" Width="50" Height="25" Margin="187,193,55,51" Click="RegisterButton_Click" >Register</Button>
+        <TextBox Name="Username" HorizontalAlignment="Left" Height="23" Margin="88,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Brugernavn" HorizontalAlignment="Left" Margin="88,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="88,106,0,0" VerticalAlignment="Top"/>
+        <PasswordBox Name="Password" HorizontalAlignment="Left" Margin="88,132,0,0" VerticalAlignment="Top" Width="125"/>
+    </Grid>
+</Window>

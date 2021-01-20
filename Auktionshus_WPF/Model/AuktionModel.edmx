@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AuktionDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AuktionDatabaseModelStoreContainer">
+    <EntitySet Name="Accounts" EntityType="AuktionDatabaseModel.Store.Accounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PurchaseOffers" EntityType="AuktionDatabaseModel.Store.PurchaseOffers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SalesOffers" EntityType="AuktionDatabaseModel.Store.SalesOffers" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_AccountPurchaseOffer" Association="AuktionDatabaseModel.Store.FK_AccountPurchaseOffer">
+      <End Role="Accounts" EntitySet="Accounts" />
+      <End Role="PurchaseOffers" EntitySet="PurchaseOffers" />
+    </AssociationSet>
+    <AssociationSet Name="SalesOfferPurchaseOffer" Association="AuktionDatabaseModel.Store.SalesOfferPurchaseOffer">
+      <End Role="SalesOffer" EntitySet="SalesOffers" />
+      <End Role="PurchaseOffer" EntitySet="PurchaseOffers" />
+    </AssociationSet>
+    <AssociationSet Name="AccountSalesOffer" Association="AuktionDatabaseModel.Store.AccountSalesOffer">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="SalesOffer" EntitySet="SalesOffers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PurchaseOffers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Amount" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AccountId" Type="int" Nullable="true" />
+    <Property Name="SalesOfferId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="SalesOffers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MetalType" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Deadline" Type="datetime" Nullable="false" />
+    <Property Name="AccountId" Type="int" Nullable="true" />
+  </EntityType>
+  <Association Name="FK_AccountPurchaseOffer">
+    <End Role="Accounts" Type="AuktionDatabaseModel.Store.Accounts" Multiplicity="0..1" />
+    <End Role="PurchaseOffers" Type="AuktionDatabaseModel.Store.PurchaseOffers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Accounts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOffers">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SalesOfferPurchaseOffer">
+    <End Role="SalesOffer" Type="AuktionDatabaseModel.Store.SalesOffers" Multiplicity="0..1" />
+    <End Role="PurchaseOffer" Type="AuktionDatabaseModel.Store.PurchaseOffers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesOffer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOffer">
+        <PropertyRef Name="SalesOfferId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AccountSalesOffer">
+    <End Role="Account" Type="AuktionDatabaseModel.Store.Accounts" Multiplicity="0..1" />
+    <End Role="SalesOffer" Type="AuktionDatabaseModel.Store.SalesOffers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SalesOffer">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AuktionDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PurchaseOffers" Relationship="Self.FK_AccountPurchaseOffer" FromRole="Accounts" ToRole="PurchaseOffers" />
+          <NavigationProperty Name="SalesOffers" Relationship="AuktionDatabaseModel.AccountSalesOffer" FromRole="Account" ToRole="SalesOffer" />
+        </EntityType>
+        <EntityType Name="PurchaseOffer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AccountId" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_AccountPurchaseOffer" FromRole="PurchaseOffers" ToRole="Accounts" />
+          <NavigationProperty Name="SalesOffer" Relationship="AuktionDatabaseModel.SalesOfferPurchaseOffer" FromRole="PurchaseOffer" ToRole="SalesOffer" />
+          <Property Name="SalesOfferId" Type="Int32" Nullable="true" />
+        </EntityType>
+        <EntityType Name="SalesOffer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MetalType" Type="AuktionDatabaseModel.MetalType" Nullable="false" />
+          <Property Name="Amount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PurchaseOffers" Relationship="AuktionDatabaseModel.SalesOfferPurchaseOffer" FromRole="SalesOffer" ToRole="PurchaseOffer" />
+          <NavigationProperty Name="Account" Relationship="AuktionDatabaseModel.AccountSalesOffer" FromRole="SalesOffer" ToRole="Account" />
+          <Property Name="AccountId" Type="Int32" Nullable="true" />
+        </EntityType>
+        <Association Name="FK_AccountPurchaseOffer">
+          <End Role="Accounts" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="PurchaseOffers" Type="Self.PurchaseOffer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOffers">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AuktionDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="PurchaseOffers" EntityType="Self.PurchaseOffer" />
+          <EntitySet Name="SalesOffers" EntityType="Self.SalesOffer" />
+          <AssociationSet Name="FK_AccountPurchaseOffer" Association="Self.FK_AccountPurchaseOffer">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="PurchaseOffers" EntitySet="PurchaseOffers" />
+          </AssociationSet>
+          <AssociationSet Name="SalesOfferPurchaseOffer" Association="AuktionDatabaseModel.SalesOfferPurchaseOffer">
+            <End Role="SalesOffer" EntitySet="SalesOffers" />
+            <End Role="PurchaseOffer" EntitySet="PurchaseOffers" />
+          </AssociationSet>
+          <AssociationSet Name="AccountSalesOffer" Association="AuktionDatabaseModel.AccountSalesOffer">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="SalesOffer" EntitySet="SalesOffers" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="SalesOfferPurchaseOffer">
+          <End Type="AuktionDatabaseModel.SalesOffer" Role="SalesOffer" Multiplicity="0..1" />
+          <End Type="AuktionDatabaseModel.PurchaseOffer" Role="PurchaseOffer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOffer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOffer">
+              <PropertyRef Name="SalesOfferId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AccountSalesOffer">
+          <End Type="AuktionDatabaseModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="AuktionDatabaseModel.SalesOffer" Role="SalesOffer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SalesOffer">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="MetalType">
+          <Member Name="Gold" Value="1" />
+          <Member Name="Silver" Value="2" />
+          <Member Name="Palladium" Value="3" />
+          <Member Name="Osmium" Value="4" />
+          <Member Name="Iridium" Value="5" />
+          <Member Name="Rhodium" Value="6" />
+        </EnumType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AuktionDatabaseModelStoreContainer" CdmEntityContainer="AuktionDatabaseEntities">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="IsTypeOf(AuktionDatabaseModel.Account)">
+        <MappingFragment StoreEntitySet="Accounts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PurchaseOffers">
+      <EntityTypeMapping TypeName="IsTypeOf(AuktionDatabaseModel.PurchaseOffer)">
+        <MappingFragment StoreEntitySet="PurchaseOffers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+          <ScalarProperty Name="SalesOfferId" ColumnName="SalesOfferId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalesOffers">
+      <EntityTypeMapping TypeName="IsTypeOf(AuktionDatabaseModel.SalesOffer)">
+        <MappingFragment StoreEntitySet="SalesOffers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MetalType" ColumnName="MetalType" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+          <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

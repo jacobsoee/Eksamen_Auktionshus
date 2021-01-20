@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Auktionshus_WEB.Models.SalesOffer>
+
+@{
+    ViewBag.Title = "Auktionshus";
+}
+
+<h2>Auctions</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MetalType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Account.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deadline)
+        </th>
+        <th>
+            Highest offer
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (Session["UserName"].ToString() == (item.Account.Username))
+        {
+            var dal = new Auktionshus_WEB.Controllers.DALController();
+            <tr style="background-color: #4cff00">
+                <td>
+                    @Html.DisplayFor(modelItem => item.MetalType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deadline)
+                </td>
+                @if (dal.GetLastBid(item) != null)
+                {
+                    <td>
+                        @dal.GetLastBid(item).Amount by @dal.GetLastBid(item).Account.Name
+                    </td>
+                } else
+                {
+                    <td>
+                        No offers
+                    </td>
+                }
+            </tr>
+        }
+        else
+        {
+            var dal = new Auktionshus_WEB.Controllers.DALController();
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MetalType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deadline)
+                </td>
+                @if (dal.GetLastBid(item) != null)
+                {
+                    <td>
+                        @dal.GetLastBid(item).Amount by @dal.GetLastBid(item).Account.Name
+                    </td>
+                } else
+                {
+                    <td>
+                        No offers
+                    </td>
+                }
+            </tr>
+        }
+
+    }
+</table>
